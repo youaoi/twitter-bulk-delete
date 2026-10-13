@@ -1,5 +1,9 @@
 # twitter-bulk-delete
 
+<p align="center">
+  <img src="assets/own-post-cleanup.png" alt="own-post-cleanup の登録用アイコン" width="128">
+</p>
+
 自分の X アカウントのポストを扱うローカルツールです。ここでは [X Developer Console](https://console.x.com/) でアプリと資格情報を作り、このリポジトリを手元で起動するところまでを説明します。
 
 削除したいポストの持ち主である X アカウントで Console にサインインしてください。パスワードや鍵はチャットや Git に貼りません。鍵は手元の `.env` だけに置きます。
@@ -36,7 +40,13 @@
 
    App name は `own-post-cleanup` にしてください。Console は、`twitter` という綴りに加えて、キリル文字・ギリシャ文字・アクセント付きラテン文字への置き換えや、数字への置き換え（`tw1tter` など）もアプリ名として拒否します。
 
-4. 作成直後のダイアログに、一度だけ **Consumer Key**、**Secret Key**、**Bearer Token** が出ます。Consumer Key と Secret Key をパスワードマネージャに控えます。Bearer Token はこのツールでは使いません。
+4. アイコンのアップロード欄がある場合は、この PNG を指定します。一辺 1024px の正方形です。
+
+   <img src="assets/own-post-cleanup.png" alt="own-post-cleanup の登録用アイコン" width="192">
+
+   元の SVG は [assets/own-post-cleanup.svg](assets/own-post-cleanup.svg)、アップロード用 PNG は [assets/own-post-cleanup.png](assets/own-post-cleanup.png) です。
+
+5. 作成直後のダイアログに、一度だけ **Consumer Key**、**Secret Key**、**Bearer Token** が出ます。Consumer Key と Secret Key をパスワードマネージャに控えます。Bearer Token はこのツールでは使いません。
 
 ダイアログを閉じたあとでも、アプリの **Keys and tokens** から Consumer Key は再表示できます。Secret を控え損ねた場合は、その場の **Regenerate** で作り直します。作り直すと以前の Secret は無効になります。
 

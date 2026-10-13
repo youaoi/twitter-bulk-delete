@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">own-post-cleanup</title>
+  <desc id="desc">Square app icon of a post card with a coral remove mark.</desc>
+  <rect width="512" height="512" fill="#102824"/>
+  <rect x="128" y="78" width="268" height="236" rx="36" fill="#1C433C"/>
+  <rect x="92" y="118" width="292" height="252" rx="36" fill="#F4F0E6"/>
+  <rect x="124" y="156" width="132" height="22" rx="11" fill="#14332E"/>
+  <rect x="124" y="202" width="220" height="16" rx="8" fill="#D3DBD4"/>
+  <rect x="124" y="236" width="184" height="16" rx="8" fill="#D3DBD4"/>
+  <rect x="124" y="270" width="140" height="16" rx="8" fill="#D3DBD4"/>
+  <circle cx="360" cy="356" r="92" fill="#E4572E"/>
+  <rect x="304" y="342" width="112" height="28" rx="14" fill="#F7F4EE"/>
+</svg>
