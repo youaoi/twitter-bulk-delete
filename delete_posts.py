@@ -65,6 +65,7 @@ class OAuthCallbackHandler(BaseHTTPRequestHandler):
     code: str | None = None
     error: str | None = None
     event: threading.Event | None = None
+    expected_state: str | None = None
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urllib.parse.urlparse(self.path)
@@ -75,14 +76,27 @@ class OAuthCallbackHandler(BaseHTTPRequestHandler):
             return
 
         params = urllib.parse.parse_qs(parsed.query)
-        if "error" in params:
+        state_values = params.get("state", [])
+        if (
+            len(state_values) != 1
+            or OAuthCallbackHandler.expected_state is None
+            or not secrets.compare_digest(
+                state_values[0], OAuthCallbackHandler.expected_state
+            )
+        ):
+            OAuthCallbackHandler.error = "Invalid OAuth state"
+            status = 400
+            body = b"Invalid authorization response. You can close this window."
+        elif "error" in params:
             OAuthCallbackHandler.error = params["error"][0]
+            status = 200
             body = b"Authorization failed. You can close this window."
         else:
             OAuthCallbackHandler.code = params.get("code", [None])[0]
+            status = 200
             body = b"Authorization successful. You can close this window."
 
-        self.send_response(200)
+        self.send_response(status)
         self.send_header("Content-Type", "text/plain; charset=utf-8")
         self.end_headers()
         self.wfile.write(body)
@@ -143,7 +157,16 @@ def refresh_access_token(token: dict, client_id: str, client_secret: str) -> dic
 
 
 def save_token(token: dict) -> None:
-    TOKEN_FILE.write_text(json.dumps(token, indent=2) + "\n", encoding="utf-8")
+    fd = os.open(TOKEN_FILE, os.O_WRONLY | os.O_CREAT, 0o600)
+    try:
+        os.fchmod(fd, 0o600)
+        os.ftruncate(fd, 0)
+        with os.fdopen(fd, "w", encoding="utf-8") as token_file:
+            fd = -1
+            token_file.write(json.dumps(token, indent=2) + "\n")
+    finally:
+        if fd >= 0:
+            os.close(fd)
 
 
 def load_token() -> dict | None:
@@ -181,6 +204,7 @@ def authorize(client_id: str, client_secret: str, redirect_uri: str) -> dict:
     OAuthCallbackHandler.code = None
     OAuthCallbackHandler.error = None
     OAuthCallbackHandler.event = threading.Event()
+    OAuthCallbackHandler.expected_state = state
 
     server = HTTPServer((host, port), OAuthCallbackHandler)
     server.redirect_uri = redirect_uri  # type: ignore[attr-defined]
@@ -275,7 +299,11 @@ def delete_tweet(tweet_id: str, access_token: str) -> tuple[str, str | None]:
     url = DELETE_URL.format(id=tweet_id)
     headers = {"Authorization": f"Bearer {access_token}"}
     while True:
-        resp = requests.delete(url, headers=headers, timeout=60)
+        try:
+            resp = requests.delete(url, headers=headers, timeout=60)
+        except requests.RequestException as exc:
+            log_error(tweet_id, 0, f"Request failed: {exc}")
+            return "error", access_token
         if resp.status_code == 429:
             wait_for_rate_limit(resp)
             continue
