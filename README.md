@@ -30,9 +30,11 @@
 
    | 項目 | 入力する値 |
    | --- | --- |
-   | App name | `twitter-bulk-delete` |
+   | App name | `own-post-cleanup` |
    | Environment | `Production` |
    | Description / use case | `Delete posts on my own account from a local app.` |
+
+   App name は `own-post-cleanup` にしてください。Console は、`twitter` という綴りに加えて、キリル文字・ギリシャ文字・アクセント付きラテン文字への置き換えや、数字への置き換え（`tw1tter` など）もアプリ名として拒否します。
 
 4. 作成直後のダイアログに、一度だけ **Consumer Key**、**Secret Key**、**Bearer Token** が出ます。Consumer Key と Secret Key をパスワードマネージャに控えます。Bearer Token はこのツールでは使いません。
 
