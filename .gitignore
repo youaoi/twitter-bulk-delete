@@ -1,0 +1,9 @@
+.env
+token.json
+deleted.txt
+errors.log
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
