@@ -62,7 +62,7 @@ X_REDIRECT_URI=http://127.0.0.1:8765/callback
 9876543210987654321
 ```
 
-サンプルや自分用のリストを同梱している場合もあります。公開リポジトリに載せる前に、共有したくない ID は自分のローカルファイルに置き換えてください。`--ids-file path` で別ファイルも指定できます。
+このファイルはローカル専用です（`.gitignore` 済み）。`--ids-file path` で別ファイルも指定できます。
 
 ### Asking Grok to build the ID list
 
@@ -157,7 +157,7 @@ python delete_posts.py
 | Path | Description |
 |------|-------------|
 | `delete_posts.py` | メインスクリプト |
-| `tweetdelete_ids.txt` | 削除対象 ID（1 行 1 ID） |
+| `tweetdelete_ids.txt` | 削除対象 ID（1 行 1 ID、gitignore） |
 | `.env.example` | 環境変数のひな形 |
 | `token.json` | 取得トークン（gitignore） |
 | `deleted.txt` | 削除済み / 404 ID（gitignore） |
@@ -166,7 +166,7 @@ python delete_posts.py
 ## Safety notes
 
 - 削除は取り消せません。必ず `--dry-run` → `--limit 3` → 本番の順で試してください。
-- `.env` / `token.json` / `deleted.txt` / `errors.log` はコミットしないでください（`.gitignore` 済み）。
+- `.env` / `token.json` / `deleted.txt` / `errors.log` / `tweetdelete_ids.txt` はコミットしないでください（`.gitignore` 済み）。
 - Client Secret やトークンを Issue・チャットに貼らないでください。
 
 ## License
