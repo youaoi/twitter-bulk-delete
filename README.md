@@ -65,6 +65,8 @@ cp tweetdelete_ids.example.txt tweetdelete_ids.txt
 
 `tweetdelete_ids.txt` は `.gitignore` 対象です。実際の ID を含むファイルをコミットしないでください。`--ids-file path` で別ファイルも指定できます。
 
+ID リストを過去にコミットした場合、現在のファイルを削除するだけでは過去のコミットに残ります。公開済みの履歴からも取り除くには、Git 履歴の書き換えとリモートへの force push が必要です。既にクローンされたリポジトリやフォークには、古い履歴が残る場合があります。
+
 ### Asking Grok to build the ID list
 
 [Grok](https://x.com/i/grok)（X 上の Grok / Grok Bot）に、削除候補の投稿 ID 一覧を作ってもらうときの例文です。出力は「数字の ID だけ・1 行 1 件・余計な説明なし」と明示すると `tweetdelete_ids.txt` にそのまま貼りやすいです。
