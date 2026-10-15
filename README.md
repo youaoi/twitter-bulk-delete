@@ -55,14 +55,15 @@ X_REDIRECT_URI=http://127.0.0.1:8765/callback
 
 ## Preparing `tweetdelete_ids.txt`
 
-削除対象はリポジトリルートの `tweetdelete_ids.txt` に **1 行 1 ID** で置きます（`#` 始まりはコメント扱い）。
+削除対象はリポジトリルートに自分で作成する `tweetdelete_ids.txt` に **1 行 1 ID** で置きます（`#` 始まりはコメント扱い）。このファイルには個人の投稿 ID が含まれるため、Git では追跡しません。
 
-```text
-1234567890123456789
-9876543210987654321
+初めて使う場合は、ひな形をコピーしてから自分の ID を追加してください。
+
+```bash
+cp tweetdelete_ids.example.txt tweetdelete_ids.txt
 ```
 
-サンプルや自分用のリストを同梱している場合もあります。公開リポジトリに載せる前に、共有したくない ID は自分のローカルファイルに置き換えてください。`--ids-file path` で別ファイルも指定できます。
+`tweetdelete_ids.txt` は `.gitignore` 対象です。実際の ID を含むファイルをコミットしないでください。`--ids-file path` で別ファイルも指定できます。
 
 ### Asking Grok to build the ID list
 
@@ -157,7 +158,8 @@ python delete_posts.py
 | Path | Description |
 |------|-------------|
 | `delete_posts.py` | メインスクリプト |
-| `tweetdelete_ids.txt` | 削除対象 ID（1 行 1 ID） |
+| `tweetdelete_ids.example.txt` | 個人 ID を含まない ID リストのひな形 |
+| `tweetdelete_ids.txt` | ローカルに作成する削除対象 ID（Git 追跡対象外） |
 | `.env.example` | 環境変数のひな形 |
 | `token.json` | 取得トークン（gitignore） |
 | `deleted.txt` | 削除済み / 404 ID（gitignore） |
